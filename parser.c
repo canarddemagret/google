@@ -20,6 +20,7 @@ struct map getMap(const char* file) {
   fscanf(f,"\n");
 
 
+  
   /** Warehouses **/
   fscanf(f,"%d\n",&size2);
   map.nWarehouses = size2;
@@ -35,19 +36,32 @@ struct map getMap(const char* file) {
     fscanf(f,"\n");
   }
 
+  
+  map.D = malloc(sizeof(struct drone)*map.nDrones);
+  for(int i=0;i<map.nDrones;i++) {
+    map.D[i].objects = calloc(map.nItems*8,sizeof(char));
+    map.D[i].x = map.W[0].x;
+    map.D[i].y = map.W[0].y;
+    map.D[i].isFree=1;
+  }
+
   /** Customer **/
   fscanf(f,"%d\n",&map.nCustomers);
   map.C = malloc(sizeof(struct customer) * map.nCustomers);
 
   for(int i=0;i<map.nCustomers;i++) {
     map.C[i].objects = calloc(map.nItems*8,sizeof(char));
+    map.C[i].weigth = 0;
     fscanf(f,"%d %d\n",&map.C[i].x,&map.C[i].y);
     
     int res;
     fscanf(f,"%d\n",&res);
+    map.C[i].nbItems = res;
+    
     for(int j=0;j<res;j++) {
       int pos;
       fscanf(f,"%d ",&pos);
+      map.C[i].weigth += map.itemWeigth[pos];
       (map.C[i].objects[pos])++;
     }
   }
@@ -65,13 +79,10 @@ void debug(struct map* map) {
   */
 
   /*customer ok, except the 5 firsts */
-  for(int j=0;j<map->nCustomers;j++) {
-    for(int i=0;i<map->nItems;i++) {
-      if(map->C[j].objects[i] == 1) {
-	printf("%d ",i);
-      }
+  for(int i=0;i<map->nItems;i++) {
+    if(map->C[5].objects[i] == 1) {
+      printf("%d ",i);
     }
-      printf("\n");
   }
 
   

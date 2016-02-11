@@ -8,12 +8,16 @@ struct drone {
   int *objects;
   int x;
   int y;
+  int isFree;
+  int time;
 };
 
 struct customer{
   int *objects;
   int x;
   int y;
+  int weigth;
+  int nbItems;
 };
 
 struct warehouse{

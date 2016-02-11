@@ -116,8 +116,8 @@ int main(int argc, char **argv) {
   nbtot = 0;
   srand(time(NULL));
   struct map* map= malloc(sizeof(map));
-  //*map=getMap("./redundancy.in");
-  *map = getMap(argv[1]);
+  *map=getMap("./redundancy.in");
+  //*map = getMap(argv[1]);
   IA(map);
   //debug(map);
   return 0;
